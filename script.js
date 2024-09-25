@@ -15,7 +15,7 @@ const imageElement = document.getElementById('catchphrase-image');
 // Array of catchphrases and associated images
 const catchphrases = [
     { phrase: "ice cube", image: "images/1.png" },
-    { phrase: "four wheel drive", image: "images/2.png" },
+    { phrase: "4 wheel drive", image: "images/2.png" },
     
 ];
 
