@@ -15,7 +15,7 @@ const imageElement = document.getElementById('catchphrase-image');
 // Array of catchphrases and associated images
 const catchphrases = [
     { phrase: "ice cube", image: "images/1.png" },
-    { phrase: "four wheel drive", image: "images/2.png" },
+    { phrase: "4 wheel drive", image: "images/2.png" },
     
 ];
 
@@ -32,14 +32,62 @@ function loadNextCatchphrase() {
         resultElement.textContent = "";
         timeLeft = 30;
         timerElement.textContent = timeLeft;
+
+        // Start the timer immediately
         startTimer();
-        submitButton.style.display = 'none';  // Hide input and submit again
-        guessInput.style.display = 'none';
+
+        // Show input and submit button after a slight delay (if needed)
+        setTimeout(() => {
+            submitButton.style.display = 'inline';  // Show input and submit button
+            guessInput.style.display = 'inline';
+        }, 100); // Adjust this delay if you want it to appear instantly or with a short delay
+
     } else {
         // End the game if all catchphrases are done
         endGame();
     }
 }
+
+// Update the buzzer button behavior to ensure it can't be pressed until timer starts
+pauseButton.disabled = true; // Initially disable the buzzer button
+
+function startTimer() {
+    interval = setInterval(() => {
+        if (!isPaused) {
+            if (timeLeft > 0) {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+            } else {
+                clearInterval(interval);
+                resultElement.textContent = "Time's up!";
+                setTimeout(endGame, 2000); // Show the end screen after 2 seconds
+            }
+        }
+    }, 1000);
+}
+
+// Enable the buzzer button when the timer starts
+function handleTimerStart() {
+    pauseButton.disabled = false; // Enable the buzzer button
+}
+
+// Call this function at the end of startTimer
+function startTimer() {
+    handleTimerStart(); // Enable buzzer button immediately
+    interval = setInterval(() => {
+        if (!isPaused) {
+            if (timeLeft > 0) {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+            } else {
+                clearInterval(interval);
+                resultElement.textContent = "Time's up!";
+                setTimeout(endGame, 2000); // Show the end screen after 2 seconds
+            }
+        }
+    }, 1000);
+}
+
 
 // Function to end the game and show score
 function endGame() {
