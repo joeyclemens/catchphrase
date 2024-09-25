@@ -104,3 +104,4 @@ submitButton.addEventListener('click', () => {
 
 // Start the game with the first catchphrase
 loadNextCatchphrase();
+
