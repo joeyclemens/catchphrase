@@ -63,7 +63,7 @@ function startTimer() {
                 clearInterval(interval);
                 resultElement.textContent = "Time's up!";
                 currentPhraseIndex++;
-                setTimeout(loadNextCatchphrase, 2000);
+                setTimeout(endGame, 2000);
             }
         }
     }, 1000);
