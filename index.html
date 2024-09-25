@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catchphrase Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Catchphrase Game</h1>
+        <div class="image-container">
+            <img id="catchphrase-image" src="images/1.png" alt="Catchphrase">
+        </div>
+        <div class="timer">
+            Time left: <span id="timer">30</span>s
+        </div>
+        <input type="text" id="guess" placeholder="Enter your guess">
+        <button id="submit-guess">Submit Guess</button>
+        <button id="pause-timer">Buzzer (Pause 10s)</button>
+        <div id="result"></div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
