@@ -15,7 +15,7 @@ const imageElement = document.getElementById('catchphrase-image');
 // Array of catchphrases and associated images
 const catchphrases = [
     { phrase: "ice cube", image: "images/1.png" },
-    { phrase: "4 wheel drive", image: "images/2.png" },
+    { phrase: "four wheel drive", image: "images/2.png" },
     
 ];
 
@@ -23,71 +23,22 @@ const catchphrases = [
 guessInput.style.display = 'none';
 submitButton.style.display = 'none';
 
-// Function to load the next catchphrase
 function loadNextCatchphrase() {
     if (currentPhraseIndex < catchphrases.length) {
-        // Load the next catchphrase and reset the timer
         imageElement.src = catchphrases[currentPhraseIndex].image;
         guessInput.value = "";
         resultElement.textContent = "";
         timeLeft = 30;
         timerElement.textContent = timeLeft;
-
-        // Start the timer immediately
+        isPaused = false;
+        pauseTime = 15;
+        submitButton.style.display = 'none';
+        guessInput.style.display = 'none';
         startTimer();
-
-        // Show input and submit button after a slight delay (if needed)
-        setTimeout(() => {
-            submitButton.style.display = 'inline';  // Show input and submit button
-            guessInput.style.display = 'inline';
-        }, 100); // Adjust this delay if you want it to appear instantly or with a short delay
-
     } else {
-        // End the game if all catchphrases are done
         endGame();
     }
 }
-
-// Update the buzzer button behavior to ensure it can't be pressed until timer starts
-pauseButton.disabled = true; // Initially disable the buzzer button
-
-function startTimer() {
-    interval = setInterval(() => {
-        if (!isPaused) {
-            if (timeLeft > 0) {
-                timeLeft--;
-                timerElement.textContent = timeLeft;
-            } else {
-                clearInterval(interval);
-                resultElement.textContent = "Time's up!";
-                setTimeout(endGame, 2000); // Show the end screen after 2 seconds
-            }
-        }
-    }, 1000);
-}
-
-// Enable the buzzer button when the timer starts
-function handleTimerStart() {
-    pauseButton.disabled = false; // Enable the buzzer button
-}
-
-// Call this function at the end of startTimer
-function startTimer() {
-    handleTimerStart(); // Enable buzzer button immediately
-    interval = setInterval(() => {
-        if (!isPaused) {
-            if (timeLeft > 0) {
-                timeLeft--;
-                timerElement.textContent = timeLeft;
-            } else {
-                clearInterval(interval);
-                resultElement.textContent = "Time's up!";
-                setTimeout(endGame, 2000); // Show the end screen after 2 seconds
-            }
-        }
-    }, 1000);
-}
-
 
 // Function to end the game and show score
 function endGame() {
@@ -102,6 +53,7 @@ function endGame() {
 
 // Start the timer
 function startTimer() {
+    clearInterval(interval);  // Clear any existing interval
     interval = setInterval(() => {
         if (!isPaused) {
             if (timeLeft > 0) {
@@ -110,7 +62,8 @@ function startTimer() {
             } else {
                 clearInterval(interval);
                 resultElement.textContent = "Time's up!";
-                setTimeout(endGame, 2000); // Show the end screen after 2 seconds
+                currentPhraseIndex++;
+                setTimeout(loadNextCatchphrase, 2000);
             }
         }
     }, 1000);
@@ -136,7 +89,6 @@ pauseButton.addEventListener('click', () => {
     }
 });
 
-// Submit the guess
 submitButton.addEventListener('click', () => {
     let userGuess = guessInput.value.toLowerCase().trim();
     if (userGuess === catchphrases[currentPhraseIndex].phrase.toLowerCase()) {
@@ -144,12 +96,10 @@ submitButton.addEventListener('click', () => {
         resultElement.textContent = "Correct!";
         clearInterval(interval);
         currentPhraseIndex++;
-        setTimeout(loadNextCatchphrase, 2000); // Move to the next catchphrase after 2 seconds
+        setTimeout(loadNextCatchphrase, 2000);
     } else {
         resultElement.textContent = "Incorrect! Try again.";
     }
 });
 
-// Start the game with the first catchphrase
 loadNextCatchphrase();
-
