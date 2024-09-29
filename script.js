@@ -72,9 +72,12 @@ function startTimer() {
 // Pause the timer for 10 seconds and enable submit button and input
 pauseButton.addEventListener('click', () => {
     if (timeLeft > 0 && !isPaused) {
+        const pauseSound = document.getElementById('pause-sound');
+        pauseSound.play(); // Play the sound when the button is pressed
         isPaused = true;
         submitButton.style.display = 'inline';  // Show input and submit button
         guessInput.style.display = 'inline';
+        pauseButton.style.display = 'none'; // Hide the buzzer button
         let pauseInterval = setInterval(() => {
             if (pauseTime > 0) {
                 pauseTime--;
@@ -84,6 +87,7 @@ pauseButton.addEventListener('click', () => {
                 pauseTime = 10; // Reset pause time
                 submitButton.style.display = 'none';  // Hide input and submit button again
                 guessInput.style.display = 'none';
+                pauseButton.style.display = 'inline'; // Show the buzzer button again
             }
         }, 1000);
     }
@@ -100,6 +104,21 @@ submitButton.addEventListener('click', () => {
     } else {
         resultElement.textContent = "Incorrect! Try again.";
     }
+    // Show the buzzer button again after hiding the submit button and input
+    submitButton.style.display = 'none';  // Hide input and submit button again
+    guessInput.style.display = 'none';
+    pauseButton.style.display = 'inline'; // Show the buzzer button again
+});
+
+document.getElementById('pause-timer').addEventListener('click', function() {
+    // Add the class to trigger the animation
+    const imageContainer = document.querySelector('.image-container');
+    imageContainer.classList.add('snake-animation');
+    
+    // Optionally, remove the animation after it completes to allow retriggering
+    setTimeout(() => {
+        imageContainer.classList.remove('snake-animation');
+    }, 2000); // Match the duration of the animation
 });
 
 loadNextCatchphrase();
