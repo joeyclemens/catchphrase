@@ -4,7 +4,7 @@ const gameState = {
     isPaused: false,
     pauseTime: 15,
     interval: null,
-    pauseInterval: null, // Added to track pause interval
+    pauseInterval: null,
     currentPhraseIndex: 0,
     correctGuesses: 0
 };
@@ -24,7 +24,7 @@ const catchphrases = [
     { phrase: "4 wheel drive", image: "images/4.png" },
     { phrase: "apple pie", image: "images/5.png" },
     { phrase: "once upon a time", image: "images/6.png" },
-    { phrase: "tripod", image: "images/7.png" },
+    { phrase: "tripod", image: "images/7.png" }
 ];
 
 // DOM Elements
@@ -56,7 +56,6 @@ function loadNextCatchphrase() {
 
 // Reset round state
 function resetRound() {
-    // Clear any existing intervals
     clearInterval(gameState.interval);
     clearInterval(gameState.pauseInterval);
     
@@ -72,6 +71,7 @@ function resetRound() {
     elements.guessInput.style.display = 'none';
 }
 
+// End game
 function endGame() {
     clearInterval(gameState.interval);
     clearInterval(gameState.pauseInterval);
@@ -83,6 +83,7 @@ function endGame() {
     `;
 }
 
+// Start timer
 function startTimer() {
     clearInterval(gameState.interval);
     const totalTime = gameState.timeLeft;
@@ -98,7 +99,7 @@ function startTimer() {
     }, 1000);
 }
 
-<<<<<<< HEAD
+// Update timer
 function updateTimer(totalTime) {
     gameState.timeLeft--;
     elements.timer.textContent = gameState.timeLeft;
@@ -106,6 +107,7 @@ function updateTimer(totalTime) {
     elements.progressBar.style.width = `${progressWidth}%`;
 }
 
+// Handle time up
 function handleTimeUp() {
     clearInterval(gameState.interval);
     clearInterval(gameState.pauseInterval);
@@ -117,91 +119,44 @@ function handleTimeUp() {
 // Handle pause button click
 function handlePause() {
     if (gameState.timeLeft > 0 && !gameState.isPaused) {
-        // Clear any existing pause interval
         clearInterval(gameState.pauseInterval);
         
-        // Reset and initialize pause state
         gameState.isPaused = true;
         gameState.pauseTime = GAME_CONFIG.pauseDuration;
         
-        // Show input elements
         elements.submitButton.style.display = 'inline';
         elements.guessInput.style.display = 'inline';
-        elements.guessInput.focus(); // Focus on input field
+        elements.guessInput.focus();
         
-        // Start pause countdown
         gameState.pauseInterval = setInterval(() => {
             if (gameState.pauseTime > 0) {
                 gameState.pauseTime--;
-                // Optional: Update pause timer display
-                console.log(`Pause time remaining: ${gameState.pauseTime}`);
             } else {
-                // Clean up pause state
                 clearInterval(gameState.pauseInterval);
                 gameState.isPaused = false;
                 gameState.pauseTime = GAME_CONFIG.pauseDuration;
                 elements.submitButton.style.display = 'none';
                 elements.guessInput.style.display = 'none';
-=======
-// Pause the timer for 10 seconds and enable submit button and input
-pauseButton.addEventListener('click', () => {
-    if (timeLeft > 0 && !isPaused) {
-        const pauseSound = document.getElementById('pause-sound');
-        pauseSound.play(); // Play the sound when the button is pressed
-        isPaused = true;
-        submitButton.style.display = 'inline';  // Show input and submit button
-        guessInput.style.display = 'inline';
-        pauseButton.style.display = 'none'; // Hide the buzzer button
-        let pauseInterval = setInterval(() => {
-            if (pauseTime > 0) {
-                pauseTime--;
-            } else {
-                clearInterval(pauseInterval);
-                isPaused = false;
-                pauseTime = 10; // Reset pause time
-                submitButton.style.display = 'none';  // Hide input and submit button again
-                guessInput.style.display = 'none';
-                pauseButton.style.display = 'inline'; // Show the buzzer button again
->>>>>>> 2fff692600e3ac5c1d3785e318719bad597069da
             }
         }, 1000);
     }
 }
 
+// Handle user guess
 function handleGuess() {
     const userGuess = elements.guessInput.value.toLowerCase().trim();
     const correctPhrase = catchphrases[gameState.currentPhraseIndex].phrase.toLowerCase();
     
     if (userGuess === correctPhrase) {
-        // Clear intervals before proceeding
         clearInterval(gameState.interval);
         clearInterval(gameState.pauseInterval);
-        
         handleCorrectGuess();
     } else {
         elements.result.textContent = "Incorrect! Try again.";
     }
-<<<<<<< HEAD
 }
-=======
-    // Show the buzzer button again after hiding the submit button and input
-    submitButton.style.display = 'none';  // Hide input and submit button again
-    guessInput.style.display = 'none';
-    pauseButton.style.display = 'inline'; // Show the buzzer button again
-});
 
-document.getElementById('pause-timer').addEventListener('click', function() {
-    // Add the class to trigger the animation
-    const imageContainer = document.querySelector('.image-container');
-    imageContainer.classList.add('snake-animation');
-    
-    // Optionally, remove the animation after it completes to allow retriggering
-    setTimeout(() => {
-        imageContainer.classList.remove('snake-animation');
-    }, 2000); // Match the duration of the animation
-});
->>>>>>> 2fff692600e3ac5c1d3785e318719bad597069da
-
+// Handle correct guess
 function handleCorrectGuess() {
     gameState.correctGuesses++;
     elements.result.textContent = "Correct!";
