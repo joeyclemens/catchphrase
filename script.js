@@ -83,10 +83,14 @@ function resetRound() {
 function endGame() {
     clearInterval(gameState.interval);
     clearInterval(gameState.pauseInterval);
+    const totalCatchphrases = catchphrases.length;
+    const message = gameState.correctGuesses === totalCatchphrases 
+        ? "You win!" 
+        : `Game Over. You got ${gameState.correctGuesses} correct!`;
+    
     document.body.innerHTML = `
         <div class="game-container">
-            <h1>Game Over</h1>
-            <p>You got ${gameState.correctGuesses} correct!</p>
+            <h1>${message}</h1>
         </div>
     `;
 }
@@ -120,8 +124,7 @@ function handleTimeUp() {
     clearInterval(gameState.interval);
     clearInterval(gameState.pauseInterval);
     elements.result.textContent = "Time's up!";
-    gameState.currentPhraseIndex++;
-    setTimeout(loadNextCatchphrase, GAME_CONFIG.nextPhraseDelay);
+    endGame(); // Call endGame instead of loading the next catchphrase
 }
 
 // Handle pause button click
