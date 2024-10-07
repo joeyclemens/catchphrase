@@ -24,7 +24,15 @@ const catchphrases = [
     { phrase: "4 wheel drive", image: "images/4.png" },
     { phrase: "apple pie", image: "images/5.png" },
     { phrase: "once upon a time", image: "images/6.png" },
-    { phrase: "tripod", image: "images/7.png" }
+    { phrase: "tripod", image: "images/7.png" },
+    { phrase: "wish upon a star", image: "images/8.png" },
+    { phrase: "first aid", image: "images/9.png" },
+    { phrase: "equal rights", image: "images/10.png" },
+    { phrase: "forgive and forget", image: "images/11.png" },
+    { phrase: "holy water", image: "images/12.png" },
+    { phrase: "water hose", image: "images/13.png" },
+    { phrase: "oliver twist", image: "images/14.png" },
+    { phrase: "robin hood", image: "images/15.png" },
 ];
 
 // DOM Elements
