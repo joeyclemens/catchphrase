@@ -46,6 +46,9 @@ const elements = {
     image: document.getElementById('catchphrase-image')
 };
 
+// Add audio element for buzzer sound
+const buzzerSound = new Audio('../sounds/200811-361c3147-1867-4239-b23d-467d41e82d0b.mp3'); // Updated file name
+
 // Initialize game UI
 function initializeUI() {
     elements.guessInput.style.display = 'none';
@@ -130,6 +133,11 @@ function handleTimeUp() {
 // Handle pause button click
 function handlePause() {
     if (gameState.timeLeft > 0 && !gameState.isPaused) {
+        // Attempt to play the buzzer sound
+        buzzerSound.play().catch(error => {
+            console.error("Error playing sound:", error);
+        });
+        
         clearInterval(gameState.pauseInterval);
         
         gameState.isPaused = true;
