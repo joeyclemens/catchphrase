@@ -33,6 +33,7 @@ const catchphrases = [
     { phrase: "water hose", image: "images/13.png" },
     { phrase: "oliver twist", image: "images/14.png" },
     { phrase: "robin hood", image: "images/15.png" },
+
 ];
 
 // DOM Elements
@@ -91,9 +92,16 @@ function endGame() {
         ? "You win!" 
         : `Game Over. You got ${gameState.correctGuesses} correct!`;
     
+    const gifEmbed = `
+        <div class="gif-container">
+            <img src="images/mr-chips.gif" alt="Mr. Chips GIF" style="max-width: 100%; height: auto;" />
+        </div>
+    `;
+    
     document.body.innerHTML = `
         <div class="game-container">
             <h1>${message}</h1>
+            ${gifEmbed}
         </div>
     `;
 }
