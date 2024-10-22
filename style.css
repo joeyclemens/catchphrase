@@ -164,3 +164,20 @@ header .logo {
     margin: 15px 0;
     color: #7C99AD;
 }
+
+.swys-logo-container {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.swys-logo {
+    max-width: 450px;
+    height: auto;
+}
+
+/* Media query to hide the MJM logo on mobile devices */
+@media screen and (max-width: 768px) {
+    .logo.mjm-logo {
+        display: none;
+    }
+}

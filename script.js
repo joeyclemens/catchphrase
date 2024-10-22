@@ -174,13 +174,20 @@ function handleGuess() {
     const userGuess = elements.guessInput.value.toLowerCase().trim();
     const correctPhrase = catchphrases[gameState.currentPhraseIndex].phrase.toLowerCase();
     
-    if (userGuess === correctPhrase) {
+    if (isCorrectGuess(userGuess, correctPhrase)) {
         clearInterval(gameState.interval);
         clearInterval(gameState.pauseInterval);
         handleCorrectGuess();
     } else {
-        elements.result.textContent = "Incorrect! Try again.";
+        showFailGif();
     }
+}
+
+function isCorrectGuess(userGuess, correctPhrase) {
+    if (correctPhrase === "4 wheel drive") {
+        return userGuess === "4 wheel drive" || userGuess === "four wheel drive";
+    }
+    return userGuess === correctPhrase;
 }
 
 // Handle correct guess
@@ -189,6 +196,14 @@ function handleCorrectGuess() {
     elements.result.textContent = "Correct!";
     gameState.currentPhraseIndex++;
     setTimeout(loadNextCatchphrase, GAME_CONFIG.nextPhraseDelay);
+}
+
+// Show fail GIF
+function showFailGif() {
+    elements.result.innerHTML = '<img src="images/fail.gif" alt="Fail GIF" style="max-width: 100%; height: auto;">';
+    setTimeout(() => {
+        elements.result.innerHTML = '';
+    }, 2000); // Remove the GIF after 2 seconds
 }
 
 // Event listeners
